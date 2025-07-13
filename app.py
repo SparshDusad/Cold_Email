@@ -4,6 +4,17 @@ from core.extractor import extract_job_info
 from core.resume_parser import extract_resume_text_from_filelike, summarize_resume
 from core.email_generator import generate_cold_email
 
+
+import os
+import json
+import streamlit as st
+
+if "GOOGLE_APPLICATION_CREDENTIALS_JSON" in st.secrets:
+    key_json = json.loads(st.secrets["GOOGLE_APPLICATION_CREDENTIALS_JSON"])
+    with open("trial.json", "w") as f:
+        json.dump(key_json, f)
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "trial.json"
+
 st.set_page_config(page_title="Gemini Cold Email Generator", layout="centered")
 st.title("AI-Powered Cold Email Generator")
 
